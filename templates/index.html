@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mobile App Security Analyzer</title>
+    <link rel="stylesheet" href="/static/styles/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Mobile App Security Analyzer</h1>
+      <form
+        id="upload-form"
+        enctype="multipart/form-data"
+        action="/upload"
+        method="post"
+      >
+        <input
+          name="file"
+          type="file"
+          id="file-input"
+          accept=".apk,.ipa"
+          required
+        />
+        <button id="analyze-button" type="submit">Analyze</button>
+      </form>
+      <div id="results">
+        <h3>Results:</h3>
+        <div id="report"></div>
+      </div>
+    </div>
+
+    <script src="/static/scripts/app.js"></script>
+  </body>
+</html>
