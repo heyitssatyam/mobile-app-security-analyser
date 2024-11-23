@@ -1,26 +1,94 @@
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #1c2b3a;
+  margin: 0;
+  padding: 0;
+}
+
 .container {
-  display: grid;
-  gap: 10px;
-  background-color: red;
+  max-width: 800px; /* Reduced width for better vertical alignment */
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .heading {
-  grid-column: 1/3;
-  grid-row: 1;
-  background-color: blue;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 20px;
 }
 
-.insecure-data {
-  grid-row: 2;
-  grid-column: 1;
+/* Card Layout */
+.scan-info {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  gap: 20px; /* Space between cards */
 }
 
-.improper-encryption {
-  grid-row: 2;
-  grid-column: 2;
-}
-
+/* Card Styling */
+.insecure-data,
+.improper-encryption,
 .weak-permissions {
-  grid-row: 2;
-  grid-column: 3;
+  background-color: #fff;
+  width: 100%; /* Full width of the container */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.insecure-data:hover,
+.improper-encryption:hover,
+.weak-permissions:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Header */
+.insecure-data h2,
+.improper-encryption h2,
+.weak-permissions h2 {
+  color: #2f4a67;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+}
+
+/* Vulnerabilities List */
+.list-group {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-group-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.list-group-item strong {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.list-group-item span {
+  display: block;
+  color: #ff4500;
+  font-weight: bold;
+}
+
+.list-group-item p {
+  margin-top: 5px;
+  color: #555;
+}
+
+/* Empty State */
+.scan-info p {
+  color: #777;
+  font-style: italic;
+  text-align: center;
 }

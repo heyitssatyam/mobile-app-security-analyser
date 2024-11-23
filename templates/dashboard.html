@@ -9,59 +9,60 @@
   <body>
     <div class="container">
       <h1 class="heading">Security Vulnerabilities Dashboard</h1>
+      <div class="scan-info">
+        <!-- Insecure Data Storage -->
+        <div class="insecure-data">
+          <h2>Insecure Data Storage</h2>
+          {% if vulnerabilities.insecure_data_storage %}
+          <ul class="list-group">
+            {% for item in vulnerabilities.insecure_data_storage %}
+            <li class="list-group-item">
+              <strong>{{ item.title }}</strong><br />
+              <span>Severity: {{ item.severity }}</span><br />
+              <p>{{ item.description }}</p>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>No issues found.</p>
+          {% endif %}
+        </div>
 
-      <!-- Insecure Data Storage -->
-      <div class="insecure-data">
-        <h2>Insecure Data Storage</h2>
-        {% if vulnerabilities.insecure_data_storage %}
-        <ul class="list-group">
-          {% for item in vulnerabilities.insecure_data_storage %}
-          <li class="list-group-item">
-            <strong>{{ item.title }}</strong><br />
-            <span>Severity: {{ item.severity }}</span><br />
-            <p>{{ item.description }}</p>
-          </li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p>No issues found.</p>
-        {% endif %}
-      </div>
+        <!-- Improper Encryption -->
+        <div class="improper-encryption">
+          <h2>Improper Encryption</h2>
+          {% if vulnerabilities.improper_encryption %}
+          <ul class="list-group">
+            {% for item in vulnerabilities.improper_encryption %}
+            <li class="list-group-item">
+              <strong>{{ item.title }}</strong><br />
+              <span>Severity: {{ item.severity }}</span><br />
+              <p>{{ item.description }}</p>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>No issues found.</p>
+          {% endif %}
+        </div>
 
-      <!-- Improper Encryption -->
-      <div class="improper-encryption">
-        <h2>Improper Encryption</h2>
-        {% if vulnerabilities.improper_encryption %}
-        <ul class="list-group">
-          {% for item in vulnerabilities.improper_encryption %}
-          <li class="list-group-item">
-            <strong>{{ item.title }}</strong><br />
-            <span>Severity: {{ item.severity }}</span><br />
-            <p>{{ item.description }}</p>
-          </li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p>No issues found.</p>
-        {% endif %}
-      </div>
-
-      <!-- Weak Permissions -->
-      <div class="weak-permissions">
-        <h2>Weak Permissions</h2>
-        {% if vulnerabilities.weak_permissions %}
-        <ul class="list-group">
-          {% for item in vulnerabilities.weak_permissions %}
-          <li class="list-group-item">
-            <strong>{{ item.title }}</strong><br />
-            <span>Severity: {{ item.severity }}</span><br />
-            <p>{{ item.description }}</p>
-          </li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p>No issues found.</p>
-        {% endif %}
+        <!-- Weak Permissions -->
+        <div class="weak-permissions">
+          <h2>Weak Permissions</h2>
+          {% if vulnerabilities.weak_permissions %}
+          <ul class="list-group">
+            {% for item in vulnerabilities.weak_permissions %}
+            <li class="list-group-item">
+              <strong>{{ item.title }}</strong><br />
+              <span>Severity: {{ item.severity }}</span><br />
+              <p>{{ item.description }}</p>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>No issues found.</p>
+          {% endif %}
+        </div>
       </div>
     </div>
   </body>

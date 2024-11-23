@@ -7,12 +7,12 @@ import re
 app = Flask(__name__)
 CORS(app)
 MOBSF_API_URL = 'http://localhost:8000/api/v1/'
-MOBSF_API_KEY = 'MOBSF_API_KEY'
+MOBSF_API_KEY = 'fb2a8d2411a2cf4dfa5e536496caab62e8070ae820637b2455a5f38178a27f82'
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')  # Serve the HTML UI
+    return render_template('index.html')
 
 
 def extract_vulnerabilities(data):
@@ -55,7 +55,7 @@ def extract_vulnerabilities(data):
                 "severity": severity
             })
 
-    print(vulnerabilities)
+    # print(vulnerabilities)
     return vulnerabilities
 
 
@@ -69,9 +69,16 @@ def upload():
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
+    if file.filename.endswith('.apk'):
+        content_type = 'application/vnd.android.package-archive'
+    elif file.filename.endswith('.ipa'):
+        # MobSF accepts IPA files as binary streams
+        content_type = 'application/octet-stream'
+    else:
+        return jsonify({'error': 'Unsupported file type'}), 400
     # Send file to MobSF for analysis
     files = {'file': (file.filename, file.stream,
-                      'application/vnd.android.package-archive')}
+                      content_type)}
     headers = {'Authorization': MOBSF_API_KEY}
 
     try:
@@ -97,9 +104,11 @@ def upload():
         if scan_response.status_code != 200:
             print("Scan Error:", scan_response.text)
             return jsonify({'error': 'Failed to analyze APK'}), 500
-        # print("Resp", scan_response.text[:1000], scan_response.json())
+        print("Resp", scan_response.text[:1000], scan_response.json())
         vulnerabilities = extract_vulnerabilities(
             scan_response.json())
+        with open('data.json', 'w') as f:
+            json.dump(scan_response.json(), f)
         return render_template('dashboard.html', vulnerabilities=vulnerabilities)
 
     except Exception as e:
