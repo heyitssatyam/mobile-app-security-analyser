@@ -1,9 +1,12 @@
-/* General Styling */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #1c2b3a;
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  background-color: #b61a1ae0;
   margin: 0;
   padding: 0;
+  color: white;
 }
 
 .container {
@@ -55,7 +58,9 @@ body {
 .insecure-data,
 .network-issues,
 .weak-permissions {
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.229);
+  color: white;
+  backdrop-filter: blur(5px);
   width: 100%; /* Full width of the container */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -67,7 +72,7 @@ body {
 .insecure-data:hover,
 .network-issues:hover,
 .weak-permissions:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -75,10 +80,9 @@ body {
 .insecure-data h2,
 .network-issues h2,
 .weak-permissions h2 {
-  color: #2f4a67;
+  color: #fff;
   font-size: 1.5rem;
   margin-bottom: 10px;
-  border-bottom: 2px solid #007bff;
   padding-bottom: 5px;
 }
 
@@ -92,14 +96,15 @@ body {
 .list-group-item {
   margin-bottom: 10px;
   padding: 10px;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
   border-radius: 4px;
-  background-color: #f9f9f9;
+  color: white;
+  font-size: larger;
 }
 
 .list-group-item strong {
   font-size: 1.1rem;
-  color: #333;
+  color: #fff;
 }
 
 .list-group-item span {

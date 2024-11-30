@@ -138,11 +138,14 @@ def upload():
 
         vulnerabilities = extract_vulnerabilities(scan_response.json())
 
+        total_vulnerabilities = sum(len(v) for v in vulnerabilities.values())
         # Store the file_hash for later PDF download
         session['file_hash'] = file_hash
-
+        with open('data.json', 'w') as f:
+            json.dump(scan_response.json(), f)
+        time.sleep(4)
         # Render dashboard with vulnerabilities
-        return render_template('dashboard.html', vulnerabilities=vulnerabilities)
+        return render_template('dashboard.html', vulnerabilities=vulnerabilities, total_vulnerabilities=total_vulnerabilities)
 
     except Exception as e:
         print("Exception occurred:", str(e))
