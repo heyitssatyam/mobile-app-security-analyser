@@ -9,10 +9,6 @@ body {
   height: 100vh;
 }
 
-.hidden {
-  display: none;
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -187,4 +183,8 @@ pre {
   100% {
     height: 15px;
   }
+}
+
+.hidden {
+  display: none;
 }

@@ -7,6 +7,10 @@ body {
 }
 
 .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   max-width: 800px; /* Reduced width for better vertical alignment */
   margin: 0 auto;
   padding: 20px;
@@ -16,6 +20,28 @@ body {
   text-align: center;
   color: #fff;
   margin-bottom: 20px;
+}
+.download_pdf {
+  margin: auto;
+  background-color: #4caf50; /* Green background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 15px 32px; /* Top & bottom padding of 15px, left & right padding of 32px */
+  text-align: center; /* Center the text */
+  text-decoration: none; /* Remove underline from text */
+  display: inline-block; /* Allow the button to sit inline with other content */
+  font-size: 16px; /* Set font size */
+  border-radius: 8px; /* Round corners */
+  cursor: pointer; /* Cursor pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for background color on hover */
+}
+
+.download_pdf:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.download_pdf:active {
+  background-color: #3e8e41; /* Even darker green when clicked */
 }
 
 /* Card Layout */
@@ -27,18 +53,19 @@ body {
 
 /* Card Styling */
 .insecure-data,
-.improper-encryption,
+.network-issues,
 .weak-permissions {
   background-color: #fff;
   width: 100%; /* Full width of the container */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  margin-top: 20px;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .insecure-data:hover,
-.improper-encryption:hover,
+.network-issues:hover,
 .weak-permissions:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -46,7 +73,7 @@ body {
 
 /* Card Header */
 .insecure-data h2,
-.improper-encryption h2,
+.network-issues h2,
 .weak-permissions h2 {
   color: #2f4a67;
   font-size: 1.5rem;

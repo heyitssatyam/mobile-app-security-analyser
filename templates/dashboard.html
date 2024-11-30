@@ -9,6 +9,12 @@
   <body>
     <div class="container">
       <h1 class="heading">Security Vulnerabilities Dashboard</h1>
+      <button
+        class="download_pdf"
+        onclick="window.location.href='/download_pdf';"
+      >
+        Download PDF Report
+      </button>
       <div class="scan-info">
         <!-- Insecure Data Storage -->
         <div class="insecure-data">
@@ -29,11 +35,11 @@
         </div>
 
         <!-- Improper Encryption -->
-        <div class="improper-encryption">
-          <h2>Improper Encryption</h2>
-          {% if vulnerabilities.improper_encryption %}
+        <div class="network-issues">
+          <h2>Network Vulnerabilities</h2>
+          {% if vulnerabilities.network_issues %}
           <ul class="list-group">
-            {% for item in vulnerabilities.improper_encryption %}
+            {% for item in vulnerabilities.network_issues %}
             <li class="list-group-item">
               <strong>{{ item.title }}</strong><br />
               <span>Severity: {{ item.severity }}</span><br />
@@ -65,5 +71,6 @@
         </div>
       </div>
     </div>
+    <!-- Add this button on your dashboard page -->
   </body>
 </html>
