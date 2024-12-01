@@ -2,3 +2,5 @@ venv
 op.json
 data.json
 testApps
+secret_key.py
+pdf_reports

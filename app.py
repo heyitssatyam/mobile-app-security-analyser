@@ -5,17 +5,11 @@ import json
 import re
 import time
 import os
-
+from secret_key import MOBSF_API_KEY, MOBSF_API_URL, secret_key
 app = Flask(__name__)
 CORS(app)
-MOBSF_API_URL = 'http://localhost:8000/api/v1/'
-MOBSF_API_KEY = 'fb2a8d2411a2cf4dfa5e536496caab62e8070ae820637b2455a5f38178a27f82'
 
-# Secret key for session management
-# Use a secure and random key in production
-app.secret_key = 'adsfoaijsdf32r893rifajsdoifjoiejfa'
 
-# Define where the PDFs will be stored temporarily
 PDF_DIR = 'pdf_reports'
 os.makedirs(PDF_DIR, exist_ok=True)
 
@@ -37,34 +31,34 @@ def extract_vulnerabilities(data):
         return re.sub(r'<.*?>', '', text)
 
     # Parsing data for each vulnerability category
-    for finding in data.get("manifest_analysis", {}).get("manifest_findings", []):
-        title = finding.get("title", "")
-        description = finding.get("description", "")
-        severity = finding.get("severity", "")
+    # for finding in data.get("manifest_analysis", {}).get("manifest_findings", []):
+    #     title = finding.get("title", "")
+    #     description = finding.get("description", "")
+    #     severity = finding.get("severity", "")
 
-        # Insecure Data Storage
-        if "debug" in title.lower() or "application data" in title.lower() or "data" in title.lower() or "debugger" in title.lower():
-            vulnerabilities["insecure_data_storage"].append({
-                "title": cleanseHTML(title),
-                "description": description,
-                "severity": severity
-            })
+    #     # Insecure Data Storage
+    #     if "debug" in title.lower() or "application data" in title.lower() or "data" in title.lower() or "debugger" in title.lower():
+    #         vulnerabilities["insecure_data_storage"].append({
+    #             "title": cleanseHTML(title),
+    #             "description": description,
+    #             "severity": severity
+    #         })
 
-        # Improper Encryption
-        elif "encryption" in title.lower() or "crypto" in title.lower() or "sha1" in title.lower():
-            vulnerabilities["improper_encryption"].append({
-                "title": cleanseHTML(title),
-                "description": description,
-                "severity": severity
-            })
+    #     # Improper Encryption
+    #     elif "network" in title.lower() or "access" in title.lower() or "wifi" in title.lower():
+    #         vulnerabilities["improper_encryption"].append({
+    #             "title": cleanseHTML(title),
+    #             "description": description,
+    #             "severity": severity
+    #         })
 
-        # Weak Permissions
-        elif "permission" in title.lower() or "exported" in title.lower():
-            vulnerabilities["weak_permissions"].append({
-                "title": cleanseHTML(title),
-                "description": description,
-                "severity": severity
-            })
+    #     # Weak Permissions
+    #     elif "permission" in title.lower() or "exported" in title.lower():
+    #         vulnerabilities["weak_permissions"].append({
+    #             "title": cleanseHTML(title),
+    #             "description": description,
+    #             "severity": severity
+    #         })
 
     for perm, details in data.get("permissions", {}).items():
         # Check for insecure data storage-related permissions

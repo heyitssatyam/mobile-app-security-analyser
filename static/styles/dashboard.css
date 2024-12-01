@@ -7,6 +7,7 @@ body {
   margin: 0;
   padding: 0;
   color: white;
+  backdrop-filter: blur(-3px);
 }
 
 .container {
@@ -14,7 +15,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  max-width: 800px; /* Reduced width for better vertical alignment */
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -58,9 +59,9 @@ body {
 .insecure-data,
 .network-issues,
 .weak-permissions {
-  background-color: rgba(0, 0, 0, 0.229);
+  background-color: rgba(236, 12, 12, 0.201);
   color: white;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
   width: 100%; /* Full width of the container */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

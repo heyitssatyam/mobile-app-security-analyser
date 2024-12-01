@@ -20,11 +20,12 @@
       }
     </style>
   </head>
-  <body class="{{ 'red-bg' if total_vulnerabilities > 5 else 'green-bg' }}">
+  <body class="{{ 'red-bg' if total_vulnerabilities >5  else 'green-bg' }}">
     <div class="container">
       <h1 class="heading">Security Vulnerabilities Dashboard</h1>
       <button
         class="download_pdf"
+        style="background-color: {{ 'red' if total_vulnerabilities > 5 else 'light-green'}}"
         onclick="window.location.href='/download_pdf';"
       >
         Download PDF Report
