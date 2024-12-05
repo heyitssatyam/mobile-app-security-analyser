@@ -20,68 +20,79 @@ def index():
 
 
 def extract_vulnerabilities(data):
+
     vulnerabilities = {
         "insecure_data_storage": [],
-        "improper_encryption": [],
         "weak_permissions": [],
-        "network_issues": []
+        "network_issues": [],
+        "security_score": []
+
     }
+    security_score = data.get("appsec", {}).get("security_score")
 
     def cleanseHTML(text: str) -> str:
         return re.sub(r'<.*?>', '', text)
-
+    print(security_score)
     # Parsing data for each vulnerability category
-    # for finding in data.get("manifest_analysis", {}).get("manifest_findings", []):
-    #     title = finding.get("title", "")
-    #     description = finding.get("description", "")
-    #     severity = finding.get("severity", "")
+    for finding in data.get("manifest_analysis", {}).get("manifest_findings", []):
+        title = finding.get("title", "")
+        description = finding.get("description", "")
+        severity = finding.get("severity", "")
+        # if severity == "info" or severity == "normal" or severity == "warning" or severity == "unknown":
+        #     continue
+        # Insecure Data Storage
+        if any(keyword in title.lower() for keyword in ["record", "camera", "storage", "write", "read", "billing", "data", "backup"]):
+            vulnerabilities["insecure_data_storage"].append({
+                "title": cleanseHTML(title),
+                "description": description,
+                "severity": severity
+            })
 
-    #     # Insecure Data Storage
-    #     if "debug" in title.lower() or "application data" in title.lower() or "data" in title.lower() or "debugger" in title.lower():
-    #         vulnerabilities["insecure_data_storage"].append({
-    #             "title": cleanseHTML(title),
-    #             "description": description,
-    #             "severity": severity
-    #         })
+        # Improper Encryption
+        elif any(keyword in title.lower() for keyword in ["internet", "network", "wifi", "socket", "adservices", "location", "access", "change"]):
+            vulnerabilities["network_issues"].append({
+                "title": cleanseHTML(title),
+                "description": description,
+                "severity": severity
+            })
 
-    #     # Improper Encryption
-    #     elif "network" in title.lower() or "access" in title.lower() or "wifi" in title.lower():
-    #         vulnerabilities["improper_encryption"].append({
-    #             "title": cleanseHTML(title),
-    #             "description": description,
-    #             "severity": severity
-    #         })
-
-    #     # Weak Permissions
-    #     elif "permission" in title.lower() or "exported" in title.lower():
-    #         vulnerabilities["weak_permissions"].append({
-    #             "title": cleanseHTML(title),
-    #             "description": description,
-    #             "severity": severity
-    #         })
+        # Weak Permissions
+        elif any(keyword in title.lower() for keyword in ["receive_boot", "set_wallpaper", "wake_lock", "ignore_battery", "use_credentials", "get_accounts", "notification", "post", "unknown", "call", "send", "sms", "receive"]):
+            vulnerabilities["weak_permissions"].append({
+                "title": cleanseHTML(title),
+                "description": description,
+                "severity": severity
+            })
 
     for perm, details in data.get("permissions", {}).items():
+        title = perm
+        description = details.get("description", "")
+        severity = details.get("status", "")
+        # if severity == "info" or severity == "normal" or severity == "warning" or severity == "unknown":
+        #     continue
         # Check for insecure data storage-related permissions
         if any(keyword in perm.lower() for keyword in ["record", "camera", "storage", "write", "read", "billing", "data", "backup"]):
             vulnerabilities["insecure_data_storage"].append({
                 "title": perm,
-                "description": details.get("description", ""),
-                "severity": details.get("status", "")
+                "description": description,
+                "severity": severity
             })
         # Check for weak permission-related permissions
-        elif any(keyword in perm.lower() for keyword in ["receive_boot", "set_wallpaper", "wake_lock", "ignore_battery", "use_credentials", "get_accounts", "notification", "post", "unknown", "call", "send", "sms", "receive"]):
+        elif any(keyword in perm.lower() for keyword in ["receive_boot", "set_wallpaper", "wake_lock", "ignore_battery", "use_credentials", "get_accounts", "notification", "post", "unknown", "call", "send", "sms", "receive", "face", "biometric", "photo"]):
             vulnerabilities["weak_permissions"].append({
                 "title": perm,
-                "description": details.get("description", ""),
-                "severity": details.get("status", "")
+                "description": description,
+                "severity": severity
             })
         # Check for network issue-related permissions
         elif any(keyword in perm.lower() for keyword in ["internet", "network", "wifi", "socket", "adservices", "location", "access", "change"]):
             vulnerabilities["network_issues"].append({
                 "title": perm,
-                "description": details.get("description", ""),
-                "severity": details.get("status", "")
+                "description": description,
+                "severity": severity
             })
+    security_score = data.get("appsec", {}).get("security_score")
+    vulnerabilities["security_score"].append(security_score)
     return vulnerabilities
 
 
@@ -123,6 +134,7 @@ def upload():
 
         # Request the scan
         scan_payload = {'hash': file_hash}
+        print(scan_payload)
         scan_response = requests.post(
             MOBSF_API_URL + 'scan', data=scan_payload, headers=headers)
 
@@ -137,9 +149,9 @@ def upload():
         session['file_hash'] = file_hash
         with open('data.json', 'w') as f:
             json.dump(scan_response.json(), f)
-        time.sleep(4)
+        time.sleep(3)
         # Render dashboard with vulnerabilities
-        return render_template('dashboard.html', vulnerabilities=vulnerabilities, total_vulnerabilities=total_vulnerabilities)
+        return render_template('dashboard.html', vulnerabilities=vulnerabilities, total_vulnerabilities=total_vulnerabilities, filename=file.filename)
 
     except Exception as e:
         print("Exception occurred:", str(e))

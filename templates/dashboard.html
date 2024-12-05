@@ -23,6 +23,10 @@
   <body class="{{ 'red-bg' if total_vulnerabilities >5  else 'green-bg' }}">
     <div class="container">
       <h1 class="heading">Security Vulnerabilities Dashboard</h1>
+      <h2>
+        File Name: {{filename}} &nbsp; &nbsp; Security Score:
+        {{vulnerabilities.security_score}}
+      </h2>
       <button
         class="download_pdf"
         style="background-color: {{ 'red' if total_vulnerabilities > 5 else 'light-green'}}"
